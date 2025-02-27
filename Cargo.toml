@@ -1,0 +1,16 @@
+[workspace]
+members = [
+  "src/client/trash_cleaner",
+  "src/storage/chunk_engine"
+]
+resolver = "2"
+
+[workspace.package]
+authors = ["dev <noreply@deepseek.com>"]
+edition = "2021"
+license = "MIT"
+
+[profile.release-cmake]
+debug = true
+inherits = "release"
+lto = true
