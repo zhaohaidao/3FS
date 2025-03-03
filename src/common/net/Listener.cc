@@ -119,7 +119,7 @@ Result<Void> Listener::start(ServiceGroup &group) {
     }
     auto accept = [this](auto socket) { acceptRDMA(std::move(socket)); };
     auto service = std::make_unique<IBConnectService>(ibconfig_, accept, config_.rdma_accept_timeout_getter());
-    group.addSerdeService(std::move(service), Address::Type::TCP);
+    group.addSerdeService(std::move(service), Address::RDMA);
   }
 
   if (UNLIKELY(addressList_.empty())) {
@@ -222,7 +222,7 @@ CoTask<void> Listener::checkRDMA(std::weak_ptr<Transport> weak) {
 }
 
 CoTask<void> Listener::release(folly::coro::ServerSocket /* socket */) {
-  XLOGF(DBG, "release a unused TCP server socket");
+  XLOGF(DBG, "release a unused server socket");
   --running_;
   co_return;
 }
